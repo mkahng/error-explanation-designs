@@ -11,6 +11,8 @@
     --green:#2F9E44; --gtext:#1c5e25; --gbg:#E9F7EC; --gbd:#9ec9a6;
     --red:#D92D20; --rtext:#9a2820; --rbg:#FDECEA; --rbd:#E0524A;
     --orange:#E8590C; --ink:#1b1b1b; --muted:#6a6a6a; --line:#e7e4dc;
+    --canvas:#fbfcff; --dot:#c8d8ff;
+    --dot-grid:radial-gradient(var(--dot) 1.5px, transparent 1.5px);
     --hand:'Gloria Hallelujah', cursive; --sans:'Inter', system-ui, sans-serif;
   }
   *{box-sizing:border-box}
@@ -26,7 +28,7 @@
   .cell-wrap{display:flex;flex-direction:column;gap:8px}
   .typelabel{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8a8a8a}
   .review{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#8a5a12;background:#FAEFD8;border:1px solid #e6c98a;border-radius:20px;padding:2px 9px;align-self:flex-start}
-  .phone{background:#fff;border:1px solid #e3e0d8;border-radius:24px;padding:16px 16px 6px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .phone{background-color:var(--canvas);background-image:var(--dot-grid);background-size:26px 26px;border:1px solid #e3e0d8;border-radius:24px;padding:16px 16px 6px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
   .chev-back{color:#777;margin-bottom:6px}
   .scrtitle{font-size:16px;font-weight:600;color:#111;margin:0 0 6px}
   .q{font-size:13px;color:#333;line-height:1.45;margin:0 0 10px}
@@ -41,7 +43,7 @@
   .blk.single{margin-top:4px}
   .blk .lbl2{font-family:var(--sans);font-weight:600;font-size:11.5px;color:#3a3a3a;letter-spacing:.02em}
   .blk .exp{font-family:var(--hand);font-size:12.5px;color:#222;line-height:1.55;margin-top:2px}
-  .scaffold{font-family:var(--hand);background:#fbfcff;background-image:radial-gradient(#c8d8ff 1.5px,transparent 1.5px);background-size:26px 26px;border:1px solid #e2e8f5;border-radius:12px;padding:12px 13px;margin:8px 0 10px}
+  .scaffold{font-family:var(--hand);padding:4px 0 2px;margin:8px 0 10px}
   .scaffold-step{margin:4px 0 14px}
   .scaffold-step:last-child{margin-bottom:0}
   .scaffold-title{color:var(--orange);font-size:13px;font-weight:600;margin:0 0 7px}

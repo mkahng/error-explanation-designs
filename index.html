@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Error Explanations — Expandable Answer Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#2F9E44; --gtext:#1c5e25; --gbg:#E9F7EC; --gbd:#9ec9a6;
+    --red:#D92D20; --rtext:#9a2820; --rbg:#FDECEA; --rbd:#E0524A;
+    --orange:#E8590C; --ink:#1b1b1b; --muted:#6a6a6a; --line:#e7e4dc;
+    --hand:'Gloria Hallelujah', cursive; --sans:'Inter', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#f3f1ec;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  header{max-width:1100px;margin:0 auto;padding:36px 24px 8px}
+  h1{font-size:24px;font-weight:600;margin:0 0 6px}
+  .sub{color:#555;font-size:14px;margin:0 0 16px;max-width:720px;line-height:1.5}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:#444;margin-bottom:6px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .note{max-width:720px;font-size:13px;color:#555;line-height:1.5;margin:6px 0 0;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px}
+  .grid{max-width:1100px;margin:0 auto;padding:18px 24px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:24px;align-items:start}
+  .cell-wrap{display:flex;flex-direction:column;gap:8px}
+  .typelabel{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8a8a8a}
+  .review{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#8a5a12;background:#FAEFD8;border:1px solid #e6c98a;border-radius:20px;padding:2px 9px;align-self:flex-start}
+  .phone{background:#fff;border:1px solid #e3e0d8;border-radius:24px;padding:16px 16px 6px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .chev-back{color:#777;margin-bottom:6px}
+  .scrtitle{font-size:16px;font-weight:600;color:#111;margin:0 0 6px}
+  .q{font-size:13px;color:#333;line-height:1.45;margin:0 0 10px}
+  .card{background:#f7f6f2;border:1px solid var(--line);border-radius:12px;padding:11px;text-align:center;font-size:15px;margin-bottom:10px}
+  .qbody{margin:0 0 2px}
+  .qline{font-size:14px;line-height:1.6;color:#222;display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:6px 0}
+  .divider{border:0;border-top:1px solid #eee;margin:11px 0 9px}
+  .concept{font-family:var(--hand);font-size:13px;line-height:1.6;color:#222;margin:0 0 6px}
+  .concept .kw{color:var(--orange)}
+  .blk{margin-top:11px}
+  .blk .lbl2{font-family:var(--sans);font-weight:600;font-size:11.5px;color:#3a3a3a;letter-spacing:.02em}
+  .blk .exp{font-family:var(--hand);font-size:12.5px;color:#222;line-height:1.55;margin-top:2px}
+  /* accordion option */
+  .opt{border-radius:10px;margin:6px 0;overflow:hidden;border:1px solid transparent}
+  .opt.g{background:var(--gbg)} .opt.r{background:var(--rbg)} .opt.n{background:#fff;border-color:var(--line)}
+  .head{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;user-select:none}
+  .bx{width:18px;height:18px;border-radius:5px;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .bx.gf{background:var(--green)} .bx.rf{background:var(--red)}
+  .bx.ge{background:#fff;border:1.5px solid #b6c9b0} .bx.ne{background:#fff;border:1.5px solid #d9d6cc}
+  .bx svg{width:12px;height:12px}
+  .otext{flex:1;font-size:14px;font-weight:500}
+  .opt.g .otext{color:var(--gtext)} .opt.r .otext{color:var(--rtext)}
+  .chev{width:16px;height:16px;color:#8a8a8a;transition:transform .18s ease;flex:0 0 auto}
+  .opt.open .chev{transform:rotate(180deg)}
+  .panel{max-height:0;overflow:hidden;transition:max-height .22s ease;font-family:var(--hand);font-size:12px;line-height:1.6;color:#333}
+  .opt.open .panel{max-height:260px}
+  .panel .inner{padding:0 12px 12px 40px}
+  /* chips */
+  .chipg,.chipr{display:inline-flex;align-items:center;gap:5px;border-radius:8px;padding:2px 10px;font-weight:500;font-family:var(--sans);font-size:14px}
+  .chipg{background:var(--gbg);border:1.5px solid #46B14E;color:var(--gtext)}
+  .chipr{background:var(--rbg);border:1.5px solid var(--rbd);color:var(--rtext)}
+  .chipg svg{width:14px;height:14px}
+  /* table fill */
+  table{border-collapse:collapse;width:100%;font-size:12px;margin-bottom:2px}
+  th,td{border:1px solid #e2e0d8;padding:6px 6px;text-align:center}
+  th{background:#f4f2ec;color:#555;font-weight:500;font-size:11px}
+  .mat{font-style:italic;white-space:nowrap}
+  td .cv{display:inline-flex;align-items:center;gap:4px;justify-content:center}
+  .gv{color:var(--gtext);font-weight:500} .gv svg{width:12px;height:12px}
+  .rv{color:var(--rtext);font-weight:500;background:var(--rbg);border:1px solid var(--rbd);border-radius:5px;padding:0 5px;margin-right:3px}
+  .ask{margin-top:14px;display:flex;align-items:center;gap:8px;border:1px solid #ddd;border-radius:20px;padding:9px 13px;color:#9a988f;font-size:12px}
+  .ask svg{width:15px;height:15px;margin-left:auto;color:#b5b3aa}
+  footer{max-width:1100px;margin:0 auto;padding:0 24px 50px;color:#888;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Error Explanations — Expandable Answer Designs</h1>
+  <p class="sub">"Solving steps" reuses the question the student just answered, with a concept and per-answer explanations. Mocked per exercise type — click the option rows to expand/collapse.</p>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--green)"></i>correct</span>
+    <span><i class="dot" style="background:var(--red)"></i>your wrong answer</span>
+    <span><i class="dot" style="background:var(--orange)"></i>concept</span>
+  </div>
+  <p class="note"><b>Expansion logic (selectable types):</b> expand the incorrect options the student <i>selected</i> and any correct answer they <i>missed</i>; collapse correct answers they got right and distractors they didn't pick. Show what went wrong first.</p>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<footer>Selectable types: title → question → concept → options. Constructed &amp; table-fill: title → question with filled answers → concept → numbered Blank explanations. Deferred: match, grouping, graphing/image.</footer>
+
+<script>
+const CHK='<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CHKG='<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="#2F9E44" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CHEV='<svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const BACK='<svg viewBox="0 0 16 16" width="18" height="18" fill="none"><path d="M10 3L5 8l5 5" stroke="#777" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const SEND='<svg viewBox="0 0 20 20" fill="none"><path d="M3 10l14-6-6 14-2-6-6-2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+
+function box(kind){const ic=(kind==='gf'||kind==='rf')?CHK:'';return `<div class="bx ${kind}">${ic}</div>`;}
+function option(o){return `<div class="opt ${o.bg} ${o.open?'open':''}">
+    <div class="head">${box(o.box)}<div class="otext">${o.text}</div>${CHEV}</div>
+    <div class="panel"><div class="inner">${o.explain}</div></div></div>`;}
+function chipG(t){return `<span class="chipg">${t} ${CHKG}</span>`;}
+function chipR(t){return `<span class="chipr">${t}</span>`;}
+function blank(n,exp){return `<div class="blk"><div class="lbl2">Blank ${n}</div><div class="exp">${exp}</div></div>`;}
+function phone(inner){return `<div class="phone"><div class="chev-back">${BACK}</div>${inner}<div class="ask"><span>Ask a question</span>${SEND}</div></div>`;}
+
+const cards=[];
+function card(label, review, inner){cards.push(`<div class="cell-wrap"><div class="typelabel">${label}</div>${review?'<span class="review">needs design review</span>':''}${phone(inner)}</div>`);}
+
+/* ---------- Selectable types ---------- */
+/* 1. Multiple choice — picked 3^10 (wrong); missed 2(3^5) */
+card('Multiple choice', false,
+  `<div class="scrtitle">Solving steps</div><div class="q">3⁵ + 3⁵ = ___</div>
+   <div class="concept"><span class="kw">Combining like terms</span> — adding a quantity to itself doubles it.</div>`+
+  option({bg:'g',box:'ge',text:'2(3⁵)',open:true,explain:'two copies of 3⁵ = 2 × 3⁵'})+
+  option({bg:'r',box:'rf',text:'3¹⁰',open:true,explain:'Adds the exponents — that’s the rule for multiplying (3⁵ · 3⁵), not adding.'})+
+  option({bg:'n',box:'ne',text:'6⁵',open:false,explain:'Adds the bases. The base stays 3; you don’t add 3 + 3.'})+
+  option({bg:'n',box:'ne',text:'2(3¹⁰)',open:false,explain:'Doubles correctly but also changes the exponent — the power stays 5.'})
+);
+
+/* 2. Multi-select — selected 3/3 (right) & 125% (wrong); missed 1.0 */
+card('Multi-select', false,
+  `<div class="scrtitle">Solving steps</div><div class="q">Which numbers are equal to 5.5?</div>
+   <div class="concept">"<span class="kw">of</span>" means multiply — equal to 5.5 only at <span class="kw">one whole</span>.</div>`+
+  option({bg:'g',box:'ge',text:'1.0 of 5.5',open:true,explain:'1.0 is one whole → 1.0 × 5.5 = 5.5 &nbsp;(you missed this)'})+
+  option({bg:'g',box:'gf',text:'3/3 of 5.5',open:false,explain:'3/3 = 1, also one whole → 5.5'})+
+  option({bg:'r',box:'rf',text:'125% of 5.5',open:true,explain:'125% = 1.25 → 1.25 × 5.5 = 6.875, not 5.5'})+
+  option({bg:'n',box:'ne',text:'0.5 of 5.5',open:false,explain:'0.5 is half → 0.5 × 5.5 = 2.75, not 5.5'})
+);
+
+/* 3. True / False — picked False (wrong); missed True */
+card('True / False', false,
+  `<div class="scrtitle">Solving steps</div><div class="q">If two equations have different slopes, they intersect once.</div>
+   <div class="concept"><span class="kw">Different slopes</span> mean the lines aren’t parallel.</div>`+
+  option({bg:'g',box:'ge',text:'True',open:true,explain:'not parallel → the lines cross at exactly one point'})+
+  option({bg:'r',box:'rf',text:'False',open:true,explain:'False would mean they never meet — but only parallel (same-slope) lines do that.'})
+);
+
+/* ---------- Constructed types ---------- */
+/* 4. Type — one blank */
+card('Type', false,
+  `<div class="scrtitle">Solving steps</div>
+   <div class="qbody"><div class="qline">What is the constant of the expanded (2x + 5)(x − 4)?</div>
+   <div class="qline">constant = ${chipR('6')} ${chipG('−20')}</div></div>
+   <hr class="divider">
+   <div class="concept">The <span class="kw">constant</span> is the term with no x — the product of the two number terms.</div>
+   <div class="blanks">${blank(1,'5 × (−4) = −20 — every other term in the expansion has an x.')}</div>`
+);
+
+/* 5. Complete-arrange — three blanks */
+card('Complete-arrange', false,
+  `<div class="scrtitle">Solving steps</div>
+   <div class="card">(|4x + 1| − 6) / 2 = 9</div>
+   <div class="qbody">
+     <div class="qline">|4x + 1| − 6 = ${chipG('18')}</div>
+     <div class="qline">|4x + 1| = ${chipR('12')} ${chipG('24')}</div>
+     <div class="qline">Positive: 4x + 1 = 24</div>
+     <div class="qline">Negative: 4x + 1 = ${chipR('24')} ${chipG('−24')}</div>
+   </div>
+   <hr class="divider">
+   <div class="concept">To <span class="kw">solve an absolute value</span>, clear the fraction, isolate it, then split into two cases.</div>
+   <div class="blanks">
+     ${blank(1,'Multiply both sides by 2 → 18.')}
+     ${blank(2,'Add 6 to both sides to isolate it → 24.')}
+     ${blank(3,'The negative case flips the sign → −24.')}
+   </div>`
+);
+
+/* 6. Hard / Semi-hard (step-by-step) — one blank, worked steps in the explanation */
+card('Hard / Semi-hard lesson', false,
+  `<div class="scrtitle">Solving steps</div>
+   <div class="qbody"><div class="qline">Solve 2(x + 3) = 16</div>
+   <div class="qline">x = ${chipR('8')} ${chipG('5')}</div></div>
+   <hr class="divider">
+   <div class="concept">Distribute first, then <span class="kw">isolate x</span> by undoing each operation.</div>
+   <div class="blanks">${blank(1,'2(x + 3) = 16 → 2x + 6 = 16 → 2x = 10 → x = 5.')}</div>`
+);
+
+/* 7. Table-fill — grid filled, then numbered blanks (left→right, top→bottom) */
+card('Table-fill', true,
+  `<div class="scrtitle">Solving steps</div>
+   <table>
+     <tr><th>Matrix A</th><th>det(A)</th><th>A⁻¹ exists?</th></tr>
+     <tr><td class="mat">(3 5 / 1 2)</td><td><span class="cv gv">1 ${CHKG}</span></td><td>Yes</td></tr>
+     <tr><td class="mat">(10 5 / 4 2)</td><td><span class="cv gv">0 ${CHKG}</span></td><td>No</td></tr>
+     <tr><td class="mat">(2 7 / 1 3)</td><td><span class="cv gv">−1 ${CHKG}</span></td><td>Yes</td></tr>
+     <tr><td class="mat">(3 12 / 1 4)</td><td><span class="cv"><span class="rv">1</span><span class="gv">0 ${CHKG}</span></span></td><td>No</td></tr>
+   </table>
+   <hr class="divider">
+   <div class="concept">A⁻¹ exists only when <span class="kw">det(A) ≠ 0</span>.</div>
+   <div class="blanks">
+     ${blank(1,'3·2 − 5·1 = 1')}
+     ${blank(2,'10·2 − 5·4 = 0')}
+     ${blank(3,'2·3 − 7·1 = −1')}
+     ${blank(4,'3·4 − 12·1 = 0 (you put 1)')}
+   </div>
+   <div class="q" style="margin-top:10px;color:#9a988f">Blanks numbered left→right, top→bottom. Cell-by-cell tap UI intentionally avoided for now.</div>`
+);
+
+document.getElementById('grid').innerHTML=cards.join('');
+document.querySelectorAll('.opt .head').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+</body>
+</html>

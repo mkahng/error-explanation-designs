@@ -34,10 +34,11 @@
   .qbody{margin:0 0 2px}
   .qline{font-size:14px;line-height:1.6;color:#222;display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:6px 0}
   .divider{border:0;border-top:1px solid #eee;margin:11px 0 9px}
-  .section-label{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#8a8a8a;margin:10px 0 3px}
+  .section-label{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#8a8a8a;margin:10px 0 3px}
   .concept{font-family:var(--hand);font-size:13px;line-height:1.6;color:#222;margin:0 0 8px}
   .concept .kw{color:var(--orange)}
   .blk{margin-top:11px}
+  .blk.single{margin-top:4px}
   .blk .lbl2{font-family:var(--sans);font-weight:600;font-size:11.5px;color:#3a3a3a;letter-spacing:.02em}
   .blk .exp{font-family:var(--hand);font-size:12.5px;color:#222;line-height:1.55;margin-top:2px}
   /* accordion option */
@@ -102,7 +103,7 @@ function option(o){return `<div class="opt ${o.bg} ${o.open?'open':''}">
     <div class="panel"><div class="inner">${o.explain}</div></div></div>`;}
 function chipG(t){return `<span class="chipg">${t} ${CHKG}</span>`;}
 function chipR(t){return `<span class="chipr">${t}</span>`;}
-function blank(n,exp){return `<div class="blk"><div class="lbl2">Blank ${n}</div><div class="exp">${exp}</div></div>`;}
+function blank(n,exp,showLabel=true){return `<div class="blk ${showLabel?'':'single'}">${showLabel?`<div class="lbl2">Blank ${n}</div>`:''}<div class="exp">${exp}</div></div>`;}
 function label(t){return `<div class="section-label">${t}</div>`;}
 function phone(inner){return `<div class="phone"><div class="chev-back">${BACK}</div>${inner}<div class="ask"><span>Ask a question</span>${SEND}</div></div>`;}
 
@@ -154,7 +155,7 @@ card('Type', false,
    ${label('Concept')}
    <div class="concept">The <span class="kw">constant</span> is the term with no x — the product of the two number terms.</div>
    ${label('Application')}
-   <div class="blanks">${blank(1,'5 × (−4) = −20 — every other term in the expansion has an x.')}</div>`
+   <div class="blanks">${blank(1,'5 × (−4) = −20 — every other term in the expansion has an x.',false)}</div>`
 );
 
 /* 5. Complete-arrange — three blanks */
@@ -187,7 +188,7 @@ card('Hard / Semi-hard lesson', false,
    ${label('Concept')}
    <div class="concept">Distribute first, then <span class="kw">isolate x</span> by undoing each operation.</div>
    ${label('Application')}
-   <div class="blanks">${blank(1,'2(x + 3) = 16 → 2x + 6 = 16 → 2x = 10 → x = 5.')}</div>`
+   <div class="blanks">${blank(1,'2(x + 3) = 16 → 2x + 6 = 16 → 2x = 10 → x = 5.',false)}</div>`
 );
 
 /* 7. Table-fill — grid filled, then numbered blanks (left→right, top→bottom) */

@@ -41,6 +41,18 @@
   .blk.single{margin-top:4px}
   .blk .lbl2{font-family:var(--sans);font-weight:600;font-size:11.5px;color:#3a3a3a;letter-spacing:.02em}
   .blk .exp{font-family:var(--hand);font-size:12.5px;color:#222;line-height:1.55;margin-top:2px}
+  .scaffold{font-family:var(--hand);background:#fbfcff;background-image:radial-gradient(#c8d8ff 1.5px,transparent 1.5px);background-size:26px 26px;border:1px solid #e2e8f5;border-radius:12px;padding:12px 13px;margin:8px 0 10px}
+  .scaffold-step{margin:4px 0 14px}
+  .scaffold-step:last-child{margin-bottom:0}
+  .scaffold-title{color:var(--orange);font-size:13px;font-weight:600;margin:0 0 7px}
+  .scaffold-line{font-size:13px;line-height:2;display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:2px 0}
+  .frac{display:inline-grid;grid-template-rows:auto auto;align-items:center;text-align:center;line-height:1.1;vertical-align:middle;margin:0 2px}
+  .frac .top{border-bottom:1.8px solid #111;padding:0 5px 2px}
+  .frac .bottom{padding:2px 5px 0}
+  .fillg,.fillr{display:inline-flex;align-items:center;gap:3px;border-radius:7px;padding:0 7px;min-height:22px;font-family:var(--sans);font-size:12px;font-weight:500}
+  .fillg{background:var(--gbg);border:1.3px solid #46B14E;color:var(--gtext)}
+  .fillr{background:var(--rbg);border:1.3px solid var(--rbd);color:var(--rtext)}
+  .fillg svg{width:12px;height:12px}
   /* accordion option */
   .opt{border-radius:10px;margin:6px 0;overflow:hidden;border:1px solid transparent}
   .opt.g{background:var(--gbg)} .opt.r{background:var(--rbg)} .opt.n{background:#fff;border-color:var(--line)}
@@ -88,7 +100,7 @@
 
 <div class="grid" id="grid"></div>
 
-<footer>Selectable types: title → question → concept → options. Constructed &amp; table-fill: title → question with filled answers → concept → numbered Blank explanations. Deferred: match, grouping, graphing/image.</footer>
+<footer>Selectable types: title → question → concept → options. Constructed &amp; table-fill: title → filled answers → concept → application. Free-form can use compact walkthroughs; scaffolded free-form groups by scaffold step. Deferred: match, grouping, graphing/image.</footer>
 
 <script>
 const CHK='<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -103,7 +115,12 @@ function option(o){return `<div class="opt ${o.bg} ${o.open?'open':''}">
     <div class="panel"><div class="inner">${o.explain}</div></div></div>`;}
 function chipG(t){return `<span class="chipg">${t} ${CHKG}</span>`;}
 function chipR(t){return `<span class="chipr">${t}</span>`;}
+function fillG(t){return `<span class="fillg">${t} ${CHKG}</span>`;}
+function fillR(t){return `<span class="fillr">${t}</span>`;}
+function frac(top,bottom){return `<span class="frac"><span class="top">${top}</span><span class="bottom">${bottom}</span></span>`;}
 function blank(n,exp,showLabel=true){return `<div class="blk ${showLabel?'':'single'}">${showLabel?`<div class="lbl2">Blank ${n}</div>`:''}<div class="exp">${exp}</div></div>`;}
+function appStep(title,exp){return `<div class="blk"><div class="lbl2">${title}</div><div class="exp">${exp}</div></div>`;}
+function scaffoldStep(title,lines){return `<div class="scaffold-step"><div class="scaffold-title">${title}</div>${lines.map(line=>`<div class="scaffold-line">${line}</div>`).join('')}</div>`;}
 function label(t){return `<div class="section-label">${t}</div>`;}
 function phone(inner){return `<div class="phone"><div class="chev-back">${BACK}</div>${inner}<div class="ask"><span>Ask a question</span>${SEND}</div></div>`;}
 
@@ -179,8 +196,8 @@ card('Complete-arrange', false,
    </div>`
 );
 
-/* 6. Hard / Semi-hard (step-by-step) — one blank, worked steps in the explanation */
-card('Hard / Semi-hard lesson', false,
+/* 6. Free-form / hard lesson — one answer, longer worked walkthrough */
+card('Free-form / hard lesson', false,
   `<div class="scrtitle">Solving steps</div>
    <div class="qbody"><div class="qline">Solve 2(x + 3) = 16</div>
    <div class="qline">x = ${chipR('8')} ${chipG('5')}</div></div>
@@ -188,10 +205,46 @@ card('Hard / Semi-hard lesson', false,
    ${label('Concept')}
    <div class="concept">Distribute first, then <span class="kw">isolate x</span> by undoing each operation.</div>
    ${label('Application')}
-   <div class="blanks">${blank(1,'2(x + 3) = 16 → 2x + 6 = 16 → 2x = 10 → x = 5.',false)}</div>`
+   <div class="blanks">
+     ${appStep('Distribute','2(x + 3) becomes 2x + 6, so the equation is 2x + 6 = 16.')}
+     ${appStep('Undo addition','Subtract 6 from both sides: 2x = 10.')}
+     ${appStep('Divide','Divide both sides by 2, so x = 5.')}
+   </div>`
 );
 
-/* 7. Table-fill — grid filled, then numbered blanks (left→right, top→bottom) */
+/* 7. Scaffolded free-form — reuse scaffold, group application by scaffold step */
+card('Scaffolded free-form', false,
+  `<div class="scrtitle">Solving steps</div>
+   <div class="qbody">
+     <div class="qline">Solve the problem</div>
+     <div class="qline">${frac('9 × 2 + 2','3 − 1')} + 3 = ${chipR('23')} ${chipG('13')}</div>
+   </div>
+   <div class="scaffold">
+     ${scaffoldStep('1. Simplify the numerator', [
+       `= ${frac('9 × 2 + 2','3 − 1')} + 3`,
+       `= ${frac(`${fillG('18')} + 2`,'3 − 1')} + 3`,
+       `= ${frac(fillG('20'),'3 − 1')} + 3`
+     ])}
+     ${scaffoldStep('2. Simplify the denominator', [
+       `= ${frac('20',fillG('2'))} + 3`
+     ])}
+     ${scaffoldStep('3. Calculate', [
+       `= ${fillG('10')} + 3`,
+       `= ${fillR('23')} ${fillG('13')}`
+     ])}
+   </div>
+   <hr class="divider">
+   ${label('Concept')}
+   <div class="concept">Evaluate the <span class="kw">fraction first</span>, then add the outside term.</div>
+   ${label('Application')}
+   <div class="blanks">
+     ${appStep('Simplify the numerator','9 × 2 = 18, then 18 + 2 = 20.')}
+     ${appStep('Simplify the denominator','3 − 1 = 2, so the fraction is 20 / 2.')}
+     ${appStep('Calculate','20 / 2 = 10, and 10 + 3 = 13.')}
+   </div>`
+);
+
+/* 8. Table-fill — grid filled, then numbered blanks (left→right, top→bottom) */
 card('Table-fill', true,
   `<div class="scrtitle">Solving steps</div>
    <table>

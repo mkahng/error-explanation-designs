@@ -106,7 +106,7 @@
 
 <div class="grid" id="grid"></div>
 
-<footer>Selectable types: title → question → concept → options. Constructed &amp; table-fill: title → filled answers → concept → application. Free-form/scaffolded can use numbered concepts → numbered application. Deferred: match, grouping, graphing/image.</footer>
+<footer>Selectable types: title → question → concept → options. Constructed &amp; table-fill: title → filled answers → concept → application. Free-form can use numbered concepts → numbered application; scaffolded jumps from the numbered scaffold to application. Deferred: match, grouping, graphing/image.</footer>
 
 <script>
 const CHK='<svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7.5l3 3 6-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -245,12 +245,6 @@ card('Scaffolded free-form', false,
      ])}
    </div>
    <hr class="divider">
-   ${label('Concepts')}
-   ${conceptList([
-     'Simplify the <span class="kw">numerator</span> first.',
-     'Simplify the <span class="kw">denominator</span> to find the divisor.',
-     'Calculate the fraction, then add the outside term.'
-   ])}
    ${label('Application')}
    <div class="blanks">
      ${appStep('1. Simplify the numerator','9 × 2 = 18, then 18 + 2 = 20.')}

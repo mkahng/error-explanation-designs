@@ -34,7 +34,8 @@
   .qbody{margin:0 0 2px}
   .qline{font-size:14px;line-height:1.6;color:#222;display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:6px 0}
   .divider{border:0;border-top:1px solid #eee;margin:11px 0 9px}
-  .concept{font-family:var(--hand);font-size:13px;line-height:1.6;color:#222;margin:0 0 6px}
+  .section-label{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#8a8a8a;margin:10px 0 3px}
+  .concept{font-family:var(--hand);font-size:13px;line-height:1.6;color:#222;margin:0 0 8px}
   .concept .kw{color:var(--orange)}
   .blk{margin-top:11px}
   .blk .lbl2{font-family:var(--sans);font-weight:600;font-size:11.5px;color:#3a3a3a;letter-spacing:.02em}
@@ -102,6 +103,7 @@ function option(o){return `<div class="opt ${o.bg} ${o.open?'open':''}">
 function chipG(t){return `<span class="chipg">${t} ${CHKG}</span>`;}
 function chipR(t){return `<span class="chipr">${t}</span>`;}
 function blank(n,exp){return `<div class="blk"><div class="lbl2">Blank ${n}</div><div class="exp">${exp}</div></div>`;}
+function label(t){return `<div class="section-label">${t}</div>`;}
 function phone(inner){return `<div class="phone"><div class="chev-back">${BACK}</div>${inner}<div class="ask"><span>Ask a question</span>${SEND}</div></div>`;}
 
 const cards=[];
@@ -111,7 +113,9 @@ function card(label, review, inner){cards.push(`<div class="cell-wrap"><div clas
 /* 1. Multiple choice — picked 3^10 (wrong); missed 2(3^5) */
 card('Multiple choice', false,
   `<div class="scrtitle">Solving steps</div><div class="q">3⁵ + 3⁵ = ___</div>
-   <div class="concept"><span class="kw">Combining like terms</span> — adding a quantity to itself doubles it.</div>`+
+   ${label('Concept')}
+   <div class="concept"><span class="kw">Combining like terms</span> — adding a quantity to itself doubles it.</div>
+   ${label('Application')}`+
   option({bg:'g',box:'ge',text:'2(3⁵)',open:true,explain:'two copies of 3⁵ = 2 × 3⁵'})+
   option({bg:'r',box:'rf',text:'3¹⁰',open:true,explain:'Adds the exponents — that’s the rule for multiplying (3⁵ · 3⁵), not adding.'})+
   option({bg:'n',box:'ne',text:'6⁵',open:false,explain:'Adds the bases. The base stays 3; you don’t add 3 + 3.'})+
@@ -121,7 +125,9 @@ card('Multiple choice', false,
 /* 2. Multi-select — selected 3/3 (right) & 125% (wrong); missed 1.0 */
 card('Multi-select', false,
   `<div class="scrtitle">Solving steps</div><div class="q">Which numbers are equal to 5.5?</div>
-   <div class="concept">"<span class="kw">of</span>" means multiply — equal to 5.5 only at <span class="kw">one whole</span>.</div>`+
+   ${label('Concept')}
+   <div class="concept">"<span class="kw">of</span>" means multiply — equal to 5.5 only at <span class="kw">one whole</span>.</div>
+   ${label('Application')}`+
   option({bg:'g',box:'ge',text:'1.0 of 5.5',open:true,explain:'1.0 is one whole → 1.0 × 5.5 = 5.5 &nbsp;(you missed this)'})+
   option({bg:'g',box:'gf',text:'3/3 of 5.5',open:false,explain:'3/3 = 1, also one whole → 5.5'})+
   option({bg:'r',box:'rf',text:'125% of 5.5',open:true,explain:'125% = 1.25 → 1.25 × 5.5 = 6.875, not 5.5'})+
@@ -131,7 +137,9 @@ card('Multi-select', false,
 /* 3. True / False — picked False (wrong); missed True */
 card('True / False', false,
   `<div class="scrtitle">Solving steps</div><div class="q">If two equations have different slopes, they intersect once.</div>
-   <div class="concept"><span class="kw">Different slopes</span> mean the lines aren’t parallel.</div>`+
+   ${label('Concept')}
+   <div class="concept"><span class="kw">Different slopes</span> mean the lines aren’t parallel.</div>
+   ${label('Application')}`+
   option({bg:'g',box:'ge',text:'True',open:true,explain:'not parallel → the lines cross at exactly one point'})+
   option({bg:'r',box:'rf',text:'False',open:true,explain:'False would mean they never meet — but only parallel (same-slope) lines do that.'})
 );
@@ -143,7 +151,9 @@ card('Type', false,
    <div class="qbody"><div class="qline">What is the constant of the expanded (2x + 5)(x − 4)?</div>
    <div class="qline">constant = ${chipR('6')} ${chipG('−20')}</div></div>
    <hr class="divider">
+   ${label('Concept')}
    <div class="concept">The <span class="kw">constant</span> is the term with no x — the product of the two number terms.</div>
+   ${label('Application')}
    <div class="blanks">${blank(1,'5 × (−4) = −20 — every other term in the expansion has an x.')}</div>`
 );
 
@@ -158,7 +168,9 @@ card('Complete-arrange', false,
      <div class="qline">Negative: 4x + 1 = ${chipR('24')} ${chipG('−24')}</div>
    </div>
    <hr class="divider">
+   ${label('Concept')}
    <div class="concept">To <span class="kw">solve an absolute value</span>, clear the fraction, isolate it, then split into two cases.</div>
+   ${label('Application')}
    <div class="blanks">
      ${blank(1,'Multiply both sides by 2 → 18.')}
      ${blank(2,'Add 6 to both sides to isolate it → 24.')}
@@ -172,7 +184,9 @@ card('Hard / Semi-hard lesson', false,
    <div class="qbody"><div class="qline">Solve 2(x + 3) = 16</div>
    <div class="qline">x = ${chipR('8')} ${chipG('5')}</div></div>
    <hr class="divider">
+   ${label('Concept')}
    <div class="concept">Distribute first, then <span class="kw">isolate x</span> by undoing each operation.</div>
+   ${label('Application')}
    <div class="blanks">${blank(1,'2(x + 3) = 16 → 2x + 6 = 16 → 2x = 10 → x = 5.')}</div>`
 );
 
@@ -187,7 +201,9 @@ card('Table-fill', true,
      <tr><td class="mat">(3 12 / 1 4)</td><td><span class="cv"><span class="rv">1</span><span class="gv">0 ${CHKG}</span></span></td><td>No</td></tr>
    </table>
    <hr class="divider">
+   ${label('Concept')}
    <div class="concept">A⁻¹ exists only when <span class="kw">det(A) ≠ 0</span>.</div>
+   ${label('Application')}
    <div class="blanks">
      ${blank(1,'3·2 − 5·1 = 1')}
      ${blank(2,'10·2 − 5·4 = 0')}
